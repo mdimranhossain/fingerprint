@@ -5,7 +5,7 @@ This project aims to project fingerprint changes based on age using a sample dat
 ## Project Structure
 
 ```
-fingerprint-projection-app
+fingerprint
 ├── src
 │   ├── main.py               # Entry point of the application
 │   ├── data
@@ -14,6 +14,7 @@ fingerprint-projection-app
 │   │   └── projection_model.py # Contains the ProjectionModel class
 │   ├── utils
 │   │   └── helpers.py         # Utility functions for data handling
+├── templates  #html ui/templates
 ├── requirements.txt           # Project dependencies
 ├── README.md                  # Project documentation
 └── .gitignore                 # Files to ignore in Git
@@ -23,8 +24,8 @@ fingerprint-projection-app
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/fingerprint-projection-app.git
-   cd fingerprint-projection-app
+   git clone https://github.com/mdimranhossain/fingerprint.git
+   cd fingerprint
    ```
 
 2. Install the required dependencies:
