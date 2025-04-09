@@ -1,4 +1,4 @@
-# Fingerprint Projection App
+# Fingerprint
 
 This project aims to project fingerprint changes based on age using a sample dataset. The application utilizes machine learning techniques to analyze fingerprint data and predict changes over a span of 5 and 10 years.
 
