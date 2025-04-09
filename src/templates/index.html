@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingerprint Feature Projections</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Fingerprint Feature Projections</h1>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Extracted Features</th>
+                            <th>Changes After 5 Years</th>
+                            <th>Changes After 10 Years</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for feature, change_5, change_10 in zipped_changes %}
+                        <tr>
+                            <td>
+                                <img src="{{ feature.image_path }}" alt="{{ feature.image_name }}" class="img-fluid" style="max-width: 100px; height: auto;">
+                                <br><strong>{{ feature.image_name }}</strong>
+                            </td>
+                            <td>
+                                Minutiae: {{ feature.minutiae | length }}<br>
+                                Ridge Endings: {{ feature.ridge_endings | length }}<br>
+                                Ridge Bifurcations: {{ feature.ridge_bifurcations | length }}
+                            </td>
+                            <td>
+                                Minutiae Change: {{ change_5.minutiae }}<br>
+                                Ridge Endings Change: {{ change_5.ridge_endings }}<br>
+                                Ridge Bifurcations Change: {{ change_5.ridge_bifurcations }}
+                            </td>
+                            <td>
+                                Minutiae Change: {{ change_10.minutiae }}<br>
+                                Ridge Endings Change: {{ change_10.ridge_endings }}<br>
+                                Ridge Bifurcations Change: {{ change_10.ridge_bifurcations }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav>
+                    <ul class="pagination">
+                        {% for page in range(1, total_pages + 1) %}
+                        <li class="page-item {% if page == current_page %}active{% endif %}">
+                            <a class="page-link" href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
