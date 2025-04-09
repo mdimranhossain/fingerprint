@@ -1,0 +1,9 @@
+I have a fingerprint image dataset in /src/data/dataset/ there 10 image for a person, pattern is 1__M_Left_index_finger (id)_(sex)(hand)_(finger_name), can you use this dataset for this project?
+
+Yes, this dataset can be used for the project. To proceed, consider the following preprocessing steps:
+1. Parse the filenames to extract metadata (id, sex, hand, finger name).
+2. Normalize the images (e.g., resizing, grayscale conversion).
+3. Augment the dataset if needed (e.g., rotations, flips).
+4. Split the dataset into training, validation, and test sets.
+5. Ensure proper labeling for supervised learning tasks.
+
