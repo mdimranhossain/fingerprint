@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Dashboard</h1>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">View Fingerprints</h5>
+                <p class="card-text">View all fingerprint data stored in the database.</p>
+                <a href="/fingerprints" class="btn btn-primary">Go to Fingerprints</a>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Add to Database</h5>
+                <p class="card-text">Add fingerprint data and features to the database.</p>
+                <a href="/add_to_database" class="btn btn-primary">Add to Database</a>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Statistics</h5>
+                <p class="card-text">View statistical analysis of fingerprint features and changes.</p>
+                <a href="/statistics" class="btn btn-primary">View Statistics</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Refresh Database</h5>
+                <p class="card-text">Remove all data and repopulate the database.</p>
+                <a href="/refresh_database" class="btn btn-danger">Refresh Database</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

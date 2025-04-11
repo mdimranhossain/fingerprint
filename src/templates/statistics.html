@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Statistical Analysis</h1>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h3 class="text-center">False Rejection Rate (FRR)</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>FRR (Original vs Changed)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Minutiae</td>
+                    <td>{{ frr_statistics.original_vs_changed.minutiae }}%</td>
+                </tr>
+                <tr>
+                    <td>Ridge Endings</td>
+                    <td>{{ frr_statistics.original_vs_changed.ridge_endings }}%</td>
+                </tr>
+                <tr>
+                    <td>Ridge Bifurcations</td>
+                    <td>{{ frr_statistics.original_vs_changed.ridge_bifurcations }}%</td>
+                </tr>
+                <tr>
+                    <td><strong>Average</strong></td>
+                    <td><strong>{{ frr_statistics.original_vs_changed.average }}%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Removed the FRR pie chart section -->
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h3 class="text-center">Summary</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Difference (Original vs 5 Years)</th>
+                    <th>Difference (Original vs 10 Years)</th>
+                    <th>Difference (5 Years vs 10 Years)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Minutiae</td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_years.minutiae.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_years.minutiae.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_years.minutiae.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_10_years.minutiae.mean }}<br>
+                        Median: {{ summary_statistics.difference_10_years.minutiae.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_10_years.minutiae.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_vs_10_years.minutiae.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_vs_10_years.minutiae.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_vs_10_years.minutiae.std_dev }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ridge Endings</td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_years.ridge_endings.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_years.ridge_endings.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_years.ridge_endings.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_10_years.ridge_endings.mean }}<br>
+                        Median: {{ summary_statistics.difference_10_years.ridge_endings.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_10_years.ridge_endings.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_vs_10_years.ridge_endings.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_vs_10_years.ridge_endings.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_vs_10_years.ridge_endings.std_dev }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ridge Bifurcations</td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_years.ridge_bifurcations.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_years.ridge_bifurcations.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_years.ridge_bifurcations.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_10_years.ridge_bifurcations.mean }}<br>
+                        Median: {{ summary_statistics.difference_10_years.ridge_bifurcations.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_10_years.ridge_bifurcations.std_dev }}
+                    </td>
+                    <td>
+                        Mean: {{ summary_statistics.difference_5_vs_10_years.ridge_bifurcations.mean }}<br>
+                        Median: {{ summary_statistics.difference_5_vs_10_years.ridge_bifurcations.median }}<br>
+                        Std Dev: {{ summary_statistics.difference_5_vs_10_years.ridge_bifurcations.std_dev }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h3 class="text-center">Feature Changes Table</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Sample</th>
+                    <th>Extracted Features</th>
+                    <th>After 5 Years</th>
+                    
+                    <th>After 10 Years</th>
+                    <th>Difference (Original vs 5 Years)</th>
+                    <th>Difference (Original vs 10 Years)</th>
+                    <th>Difference (5 Years vs 10 Years)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                <tr>
+                    <td>{{ row.image_name }}</td>
+                    <td>
+                        Minutiae: {{ row.original.minutiae }}<br>
+                        Ridge Endings: {{ row.original.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.original.ridge_bifurcations }}
+                    </td>
+                    <td>
+                        Minutiae: {{ row.after_5_years.minutiae }}<br>
+                        Ridge Endings: {{ row.after_5_years.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.after_5_years.ridge_bifurcations }}
+                    </td>
+                    
+                    <td>
+                        Minutiae: {{ row.after_10_years.minutiae }}<br>
+                        Ridge Endings: {{ row.after_10_years.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.after_10_years.ridge_bifurcations }}
+                    </td>
+                    <td>
+                        Minutiae: {{ row.difference_5_years.minutiae }}<br>
+                        Ridge Endings: {{ row.difference_5_years.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.difference_5_years.ridge_bifurcations }}
+                    </td>
+                    <td>
+                        Minutiae: {{ row.difference_10_years.minutiae }}<br>
+                        Ridge Endings: {{ row.difference_10_years.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.difference_10_years.ridge_bifurcations }}
+                    </td>
+                    <td>
+                        Minutiae: {{ row.difference_5_vs_10_years.minutiae }}<br>
+                        Ridge Endings: {{ row.difference_5_vs_10_years.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ row.difference_5_vs_10_years.ridge_bifurcations }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

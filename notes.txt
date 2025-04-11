@@ -6,4 +6,3 @@ Yes, this dataset can be used for the project. To proceed, consider the followin
 3. Augment the dataset if needed (e.g., rotations, flips).
 4. Split the dataset into training, validation, and test sets.
 5. Ensure proper labeling for supervised learning tasks.
-

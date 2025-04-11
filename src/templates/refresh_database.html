@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Refresh Database</h1>
+<p class="text-center">Click the button below to refresh the database. This will remove all data and repopulate it.</p>
+<div class="text-center">
+    <button id="refreshButton" class="btn btn-danger">Refresh Database</button>
+    <p id="statusMessage" class="mt-3"></p>
+</div>
+
+<script>
+    document.getElementById("refreshButton").addEventListener("click", function() {
+        const button = this;
+        const statusMessage = document.getElementById("statusMessage");
+
+        button.disabled = true;
+        statusMessage.textContent = "Refreshing database...";
+
+        fetch("/refresh_database", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    statusMessage.textContent = data.message;
+                    statusMessage.className = "text-success";
+                } else {
+                    statusMessage.textContent = data.message;
+                    statusMessage.className = "text-danger";
+                }
+            })
+            .catch(error => {
+                statusMessage.textContent = "An error occurred while refreshing the database.";
+                statusMessage.className = "text-danger";
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
+    });
+</script>
+{% endblock %}

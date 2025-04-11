@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Add Data to Database</h1>
+<p class="text-center">Click the button below to add fingerprint data and features to the database.</p>
+<div class="text-center">
+    <form method="POST" action="/add_to_database">
+        <button type="submit" class="btn btn-primary">Add to Database</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="text-center">Fingerprint Feature Projections</h1>
+<h1 class="text-center">Fingerprint Data from Database</h1>
 <div class="row mt-4">
     <div class="col-md-12">
         <table class="table table-bordered table-striped">
@@ -23,9 +23,9 @@
                         <br><strong>{{ change.feature.image_name }}</strong>
                     </td>
                     <td>
-                        Minutiae: {{ change.feature.minutiae | length }}<br>
-                        Ridge Endings: {{ change.feature.ridge_endings | length }}<br>
-                        Ridge Bifurcations: {{ change.feature.ridge_bifurcations | length }}
+                        Minutiae: {{ change.feature.minutiae }}<br>
+                        Ridge Endings: {{ change.feature.ridge_endings }}<br>
+                        Ridge Bifurcations: {{ change.feature.ridge_bifurcations }}
                     </td>
                     <td>
                         Minutiae Change: {{ change.change_5.minutiae }}<br>
