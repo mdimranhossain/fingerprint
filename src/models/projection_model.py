@@ -19,6 +19,13 @@ class ProjectionModel:
         if not isinstance(self.data, np.ndarray):
             raise ValueError("Data must be a numpy.ndarray.")
         
+        if len(self.data) < 2:
+            # Handle cases where the dataset is too small to split
+            print("Warning: Not enough samples to split into training and testing sets. Training on the single sample.")
+            self.train_data = self.data  # Use the single sample as the training data
+            self.test_data = None        # No test data
+            return
+
         if len(self.data.shape) == 3:
             # Flatten the 3D array into a 2D array
             num_samples, height, width = self.data.shape

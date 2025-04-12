@@ -3,7 +3,7 @@
 {% block content %}
 <h1 class="text-center">Dashboard</h1>
 <div class="row mt-4">
-    <div class="col-md-4">
+    <div class="col-md-4 mt-2">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">View Fingerprints</h5>
@@ -12,25 +12,26 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-md-4">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Add to Database</h5>
-                <p class="card-text">Add fingerprint data and features to the database.</p>
-                <a href="/add_to_database" class="btn btn-primary">Add to Database</a>
-            </div>
-        </div>
-    </div> -->
-    <div class="col-md-4">
+
+    <div class="col-md-4 mt-2">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Statistics</h5>
-                <p class="card-text">View statistical analysis of fingerprint features and changes.</p>
+                <p class="card-text">View statistics of fingerprint features and changes.</p>
                 <a href="/statistics" class="btn btn-primary">View Statistics</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 mt-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Refresh Fingerprint</h5>
+                <p class="card-text">Renerate Fingerprints if required</p>
+                <a href="{{ fingerprint_projections_url }}" class="btn btn-danger">Refresh Fingerprints</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mt-2">
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Refresh Database</h5>
@@ -40,5 +41,61 @@
         </div>
     </div>
 
+    <div class="col-md-4 mt-2">
+        <div class="card text-center">
+            <div class="card-body">
+            <h2>Fingerprint Processing</h2>
+            <div class="progress-bar">
+                <div class="progress-bar-inner"></div>
+            </div>
+            <p id="progress-summary">Processed: 0 | Pending: 0 | Failed: 0 | Total: 0</p>
+            <button id="start-processing" class="btn btn-primary">Start Processing</button>
+            <button id="reprocess-failed" class="btn btn-secondary">Reprocess Failed</button>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function updateProgress() {
+        $.get("/fingerprint_progress", function(data) {
+            const { total, processed, failed, pending } = data;
+            const progressPercentage = total > 0 ? (processed / total) * 100 : 0;
+
+            $(".progress-bar-inner").css("width", progressPercentage + "%");
+            $("#progress-summary").text(`Processed: ${processed} | Pending: ${pending} | Failed: ${failed} | Total: ${total}`);
+
+            if (pending > 0) {
+                setTimeout(updateProgress, 1000); // Poll every second
+            }
+        });
+    }
+
+    $("#start-processing").click(function() {
+        function processNext() {
+            $.post("/fingerprint_projections", function(response) {
+                if (response.status === "success" || response.status === "error") {
+                    updateProgress();
+                    processNext(); // Continue processing the next image
+                }
+            });
+        }
+
+        processNext(); // Start processing
+    });
+
+    $("#reprocess-failed").click(function() {
+        $.post("/reprocess_failed", function(response) {
+            if (response.status === "success") {
+                alert(response.message);
+                updateProgress(); // Refresh progress after resetting failed images
+            }
+        });
+    });
+</script>
 {% endblock %}

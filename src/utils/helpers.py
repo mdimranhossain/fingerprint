@@ -29,19 +29,28 @@ def load_images(image_files):
     return images
 
 def preprocess_images(images):
-    """
-    Preprocess images by resizing and normalizing.
-    Args:
-        images (list): List of images as numpy arrays.
-    Returns:
-        list: List of preprocessed images.
-    """
     processed_images = []
     for image in images:
-        resized_image = cv2.resize(image, (128, 128))  # Resize to 128x128
-        normalized_image = resized_image / 255.0  # Normalize pixel values to [0, 1]
-        processed_images.append(normalized_image)
-    return np.array(processed_images)
+        try:
+            # Ensure the image is in grayscale
+            if len(image.shape) == 3 and image.shape[2] == 3:  # If RGB, convert to grayscale
+                image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+            elif len(image.shape) == 3 and image.shape[2] == 4:  # If RGBA, convert to grayscale
+                image = cv2.cvtColor(image, cv2.COLOR_RGBA2GRAY)
+
+            # Resize the image to 128x128
+            resized_image = cv2.resize(image, (128, 128))
+
+            # Normalize pixel values to the range [0, 1]
+            normalized_image = resized_image / 255.0
+
+            # Append the processed image
+            processed_images.append(normalized_image)
+        except Exception as e:
+            print(f"Error processing image: {e}")
+
+    # Convert the list of processed images to a NumPy array
+    return np.array(processed_images, dtype=np.float32)
 
 def extract_fingerprint_features(image):
     """

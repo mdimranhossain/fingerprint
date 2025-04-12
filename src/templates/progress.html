@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing...</title>
+    <script>
+        const eventSource = new EventSource("{{ url_for('fingerprint_projections_stream') }}"); // Update endpoint
+        eventSource.onmessage = function(event) {
+            const logContainer = document.getElementById("log-container");
+            logContainer.innerHTML += `<p>${event.data}</p>`;
+            logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the latest log
+
+            if (event.data === "Processing complete") {
+                eventSource.close();
+                setTimeout(() => window.location.reload(), 2000); // Reload to show results
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Fingerprint Projections</h1>
+    <h2>Processing....</h2>
+    <div id="log-container" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto;">
+        <p>Logs will appear here...</p>
+    </div>
+</body>
+</html>

@@ -2,10 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-#notes
-notes.txt
-#dataset
-dataset/
+
 # C extensions
 *.so
 
